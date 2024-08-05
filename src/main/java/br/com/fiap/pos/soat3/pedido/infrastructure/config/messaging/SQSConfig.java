@@ -17,7 +17,7 @@ public class SQSConfig {
     @Value("${aws.accessKey}")
     private String accessKey;
 
-    @Value("${aws.accessKey}")
+    @Value("${aws.secretKey}")
     private String secretKey;
 
     @Value("${aws.region}")

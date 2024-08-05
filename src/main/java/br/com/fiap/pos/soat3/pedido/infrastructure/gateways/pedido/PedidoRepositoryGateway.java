@@ -7,7 +7,6 @@ import br.com.fiap.pos.soat3.pedido.infrastructure.config.exception.EntityNotFou
 import br.com.fiap.pos.soat3.pedido.domain.entity.Pedido;
 import br.com.fiap.pos.soat3.pedido.domain.entity.StatusPedido;
 import br.com.fiap.pos.soat3.pedido.infrastructure.gateways.produto.ProdutoRepositoryGateway;
-import br.com.fiap.pos.soat3.pedido.infrastructure.persistence.itempedido.ItemPedidoEntity;
 import br.com.fiap.pos.soat3.pedido.infrastructure.persistence.itempedido.ItemPedidoRepository;
 import br.com.fiap.pos.soat3.pedido.infrastructure.persistence.pedido.PedidoEntity;
 import br.com.fiap.pos.soat3.pedido.infrastructure.persistence.pedido.PedidoRepository;
@@ -47,7 +46,7 @@ public class PedidoRepositoryGateway implements PedidoGateway {
         
         PedidoEntity pedidoEntity = pedidoEntityMapper.toEntity(pedido);
         pedido.setId(pedidoRepository.save(pedidoEntity).getId());
-        
+        log.info("SAGA 1: Salva Pedido no DB, pedidoId {}", pedido.getId());
         log.info(String.format("Lanchonete: Pagamento do pedido  %s gerado", pedido.getId()));
         
         return pedido;

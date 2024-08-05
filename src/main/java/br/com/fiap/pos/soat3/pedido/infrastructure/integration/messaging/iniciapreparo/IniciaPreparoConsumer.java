@@ -1,48 +1,56 @@
-package br.com.fiap.pos.soat3.pedido.infrastructure.integration;
+package br.com.fiap.pos.soat3.pedido.infrastructure.integration.messaging.iniciapreparo;
 
 import br.com.fiap.pos.soat3.pedido.application.usecases.pedido.AtualizaStatusPedidoInteractor;
+import br.com.fiap.pos.soat3.pedido.domain.entity.StatusPedido;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.ReceiveMessageResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UpdatePagamentoStatusConsumer {
+public class IniciaPreparoConsumer {
 
-    private final Logger log = LoggerFactory.getLogger(UpdatePagamentoStatusConsumer.class);
+    private final Logger log = LoggerFactory.getLogger(IniciaPreparoConsumer.class);
 
-    @Value("${aws.queueName}")
+    @Value("${aws.queueName.iniciaPreparo}")
     private String queueName;
 
+    @Autowired
     private final AmazonSQS amazonSQSClient;
 
+    @Autowired
     private final ObjectMapper objectMapper;
 
-    private final AtualizaStatusPedidoInteractor atualizaStatusPedidoUseCase;
+    @Autowired
+    private AtualizaStatusPedidoInteractor atualizaStatusPedidoInteractor;
 
-
-    public UpdatePagamentoStatusConsumer(AmazonSQS amazonSQSClient, ObjectMapper objectMapper, AtualizaStatusPedidoInteractor atualizaStatusPedidoUseCase) {
+    public IniciaPreparoConsumer(AmazonSQS amazonSQSClient, ObjectMapper objectMapper) {
         this.amazonSQSClient = amazonSQSClient;
         this.objectMapper = objectMapper;
-        this.atualizaStatusPedidoUseCase = atualizaStatusPedidoUseCase;
     }
 
-    @Scheduled(fixedDelay = 5000) // It runs every 5 seconds.
+    @Scheduled(fixedDelay = 500) // It runs every 5 seconds.
     public void consumeMessages() {
+
         try {
             String queueUrl = amazonSQSClient.getQueueUrl(queueName).getQueueUrl();
 
             ReceiveMessageResult receiveMessageResult = amazonSQSClient.receiveMessage(queueUrl);
 
             if (!receiveMessageResult.getMessages().isEmpty()) {
+                log.info("SAGA 9: Consome preparo iniciado");
                 com.amazonaws.services.sqs.model.Message message = receiveMessageResult.getMessages().get(0);
-                log.info("Read Message from queue: {}", message.getBody());
-                PagamentoStatusMessage statusMessage = objectMapper.readValue(message.getBody(), PagamentoStatusMessage.class);
-                atualizaStatusPedidoUseCase.atualizaStatusPedido(Long.parseLong(statusMessage.getPedidoId()), statusMessage.getStatus());
+                log.info("Pedido: Read Message from queue: {}", message.getBody());
+                String pedidoId = objectMapper.readValue(message.getBody(), String.class);
+
+                log.info("SAGA 10: Atualiza pedido - preparo iniciado, pedidoId {}", pedidoId);
+                atualizaStatusPedidoInteractor.atualizaStatusPedido(Long.parseLong(pedidoId), StatusPedido.PREPARACAO.name());
+
                 amazonSQSClient.deleteMessage(queueUrl, message.getReceiptHandle());
             }
 
