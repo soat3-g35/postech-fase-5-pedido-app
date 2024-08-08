@@ -9,6 +9,8 @@ Projeto da Pós Tech da FIAP em Software Architecture
 ## Descrição do Projeto
 Este módulo é responsável pela aplicação de Pedido do nosso sistema de lanchonete.
 
+Link do vídeo: [https://youtu.be/TDmAMTI4vNs](https://youtu.be/TDmAMTI4vNs)
+
 ## Funcionalidades
 
 - CRUD Produto;
@@ -37,7 +39,7 @@ No desenho abaixo é possível ver nosso padrão SAGA: O microserviço de Pagame
 O microserviço de Pedido consome essa informação e atualiza o status para "PAGAMENTO APROVADO".
 
   
-![Diagrama](https://iili.io/JiJntae.md.png)
+![Diagrama](![visao-geral.png](docs%2Fvisao-geral.png))
 
 Também seria possível implementar os seguintes cenários:
 Processo de Pedido: O cliente faz um pedido e o serviço de pedidos publica um evento de "Pedido Criado", para que os serviços interessados possam consumir essa informação.
@@ -45,6 +47,10 @@ Processo de Pedido: O cliente faz um pedido e o serviço de pedidos publica um e
 Atualização de Status: Cada etapa do processo (pedido recebido, em preparação, pronto) pode ser publicada como um evento. Se posteriormente for criado um serviço de notificações, ele poderá consumir esses eventos e enviar atualizações ao cliente, de forma automática.
 
 Cadastro de Cliente: O serviço de cadastro publica um evento de "Cliente Cadastrado" após a verificação e armazenamento dos dados. Outros serviços que necessitam dessas informações podem consumir este evento.
+
+![Saga Coreografada - Fluxo Principal](![saga-coreagrafa-ff.png](docs%2Fsaga-coreagrafa-ff.png))
+![Saga Coreografada - Fluxo Alternativo](![saga-coregrafa-fa.png](docs%2Fsaga-coregrafa-fa.png)))
+
 
 ## Code Coverage
 ![Diagrama](https://iili.io/JiHOW7t.md.png)
