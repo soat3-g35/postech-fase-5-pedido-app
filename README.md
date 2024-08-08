@@ -38,8 +38,8 @@ Adaptação a Mudanças: Serviços podem reagir a eventos de forma flexível, pe
 No desenho abaixo é possível ver nosso padrão SAGA: O microserviço de Pagamento publica um Evento ao ter o pagamento confirmado. 
 O microserviço de Pedido consome essa informação e atualiza o status para "PAGAMENTO APROVADO".
 
-  
-![Diagrama](![visao-geral.png](docs%2Fvisao-geral.png))
+
+![Diagrama](https://github.com/soat3-g35/postech-fase-5-pedido-app/blob/main/docs/visao-geral.png?raw=true)
 
 Também seria possível implementar os seguintes cenários:
 Processo de Pedido: O cliente faz um pedido e o serviço de pedidos publica um evento de "Pedido Criado", para que os serviços interessados possam consumir essa informação.
@@ -48,12 +48,16 @@ Atualização de Status: Cada etapa do processo (pedido recebido, em preparaçã
 
 Cadastro de Cliente: O serviço de cadastro publica um evento de "Cliente Cadastrado" após a verificação e armazenamento dos dados. Outros serviços que necessitam dessas informações podem consumir este evento.
 
-![Saga Coreografada - Fluxo Principal](![saga-coreagrafa-ff.png](docs%2Fsaga-coreagrafa-ff.png))
-![Saga Coreografada - Fluxo Alternativo](![saga-coregrafa-fa.png](docs%2Fsaga-coregrafa-fa.png)))
+![Saga Coreografada - Fluxo Principal](https://github.com/soat3-g35/postech-fase-5-pedido-app/blob/main/docs/saga-coreagrafa-ff.png?raw=true)
+![Saga Coreografada - Fluxo Alternativo](https://github.com/soat3-g35/postech-fase-5-pedido-app/blob/main/docs/saga-coregrafa-fa.png?raw=true)
 
 
 ## Code Coverage
 ![Diagrama](https://iili.io/JiHOW7t.md.png)
+
+
+## Relatório RIPD
+[Link](https://docs.google.com/document/d/1TZVUv3RIl887ja5lpecEcdPkBf7LWD1r7Uyys8Twjok/edit?usp=sharing)
 
 ## Rodando localmente
 
