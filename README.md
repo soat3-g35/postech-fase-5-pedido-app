@@ -48,3 +48,37 @@ Cadastro de Cliente: O serviço de cadastro publica um evento de "Cliente Cadast
 
 ## Code Coverage
 ![Diagrama](https://iili.io/JiHOW7t.md.png)
+
+## Rodando localmente
+
+- Instale o Docker em sua máquina
+
+- Clone o projeto
+
+```bash
+  git clone git@github.com:leonara/pos-tech.git
+```
+
+- Crie o volume no docker
+
+```bash
+  docker volume create data
+```
+
+- Inicie o serviço
+
+```bash
+  docker-compose -f local-autoservico.yaml up -d
+```
+
+
+### Rodando localmente com k8s
+
+```bash
+  kubectl apply -f k8s/db/pvs.yaml
+  kubectl apply -f k8s/db/deployment.yaml
+  
+  kubectl exec -it <postgres_pod_name> -- bash
+  psql -U local
+  CREATE DATABASE autoservico;
+
