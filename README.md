@@ -9,7 +9,7 @@ Projeto da Pós Tech da FIAP em Software Architecture
 ## Descrição do Projeto
 Este módulo é responsável pela aplicação de Pedido do nosso sistema de lanchonete.
 
-Link do vídeo: [https://youtu.be/TDmAMTI4vNs](https://youtu.be/TDmAMTI4vNs)
+Link do vídeo: [https://youtu.be/GbqjxqGijMk](https://youtu.be/GbqjxqGijMk)
 
 ## Funcionalidades
 
